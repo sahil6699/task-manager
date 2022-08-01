@@ -1,13 +1,14 @@
 const getAllTasks = (req, res) => {
-  res.send("all items send all items form the file of the lord of the rings");
+  res.send("get all tasks");
 };
 
 const createTask = (req, res) => {
-  res.send("create the task");
+  res.json(req.body);
 };
 
 const getTask = (req, res) => {
-  res.send("get  the task");
+  console.log(req.params);
+  res.json({ id: req.params.id });
 };
 
 const updateTask = (req, res) => {
