@@ -4,6 +4,9 @@ const getAllTasks = async (req, res) => {
   // res.send("get all tasks")
   try {
     const tasks = await Task.find({})
+    // TODO: some other type of responses used in the community
+    //res.status(200).json({task, amount: task.length})
+    //res.status(200).json(status: success, data {task, nbHits: tasks.length})
     res.status(200).json({ tasks: tasks })
   } catch (error) {
     res.status(500).json({ msg: error })
