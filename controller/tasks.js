@@ -1,4 +1,3 @@
-const task = require("../models/task")
 const Task = require("../models/task")
 
 const getAllTasks = async (req, res) => {
@@ -20,9 +19,23 @@ const createTask = async (req, res) => {
   }
 }
 
-const getTask = (req, res) => {
-  console.log(req.params)
-  res.json({ id: req.params.id })
+const getTask = async (req, res) => {
+  try {
+    const { id: taskID } = req.params
+    const task = await Task.findOne({ _id: taskID })
+    if (!task) {
+      //TODO: don't forget write this return statement
+      //if we don't do this then two response i.e in if and the one below will be trigeered
+      //we have this error if no of the characters of the id is correct
+      //but this id is not matching with any id in the database
+      return res.status(404).json({ msg: `No task with id : ${taskID}` })
+    }
+    res.status(200).json({ task })
+  } catch (error) {
+    //this error msg is set up just in case the actual syntax of the id is totally off
+    //i.e the id doesn't have the specified no of characters
+    res.status(500).json({ msg: error })
+  }
 }
 
 const updateTask = (req, res) => {
